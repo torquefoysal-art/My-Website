@@ -1,16 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Outfit } from "next/font/google";
+import { Manrope, Syne } from "next/font/google";
 import { CartProvider } from "@/components/store/CartProvider";
 import "./globals.css";
 
-const display = Fraunces({
+const display = Syne({
   subsets: ["latin"],
-  style: ["normal", "italic"],
   variable: "--font-display",
   display: "swap",
 });
 
-const sans = Outfit({
+const sans = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
@@ -25,20 +24,20 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Halyard — Shirts",
+    default: "Halyard — Race jerseys",
     template: "%s — Halyard",
   },
-  description: "Halyard is a t-shirt studio. Eight shirts on one block, in navy, blue, sky, and white.",
+  description: "Halyard sells eight F1 jerseys. Carbon, red, white, and signal yellow, cut on one race block.",
   openGraph: {
-    title: "Halyard — Shirts",
-    description: "Eight shirts on one block. Navy, blue, sky, and white.",
+    title: "Halyard — Race jerseys",
+    description: "Eight F1 jerseys. Each one flies in from a corner.",
     type: "website",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f4f7fb",
-  colorScheme: "light",
+  themeColor: "#07080c",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatPrice, sizes, type Shirt } from "@/lib/catalog";
+import { FlyIn } from "./FlyIn";
 import { ShirtGraphic } from "./ShirtGraphic";
 import { useCart } from "./CartProvider";
 
@@ -33,13 +34,9 @@ export function ProductBuy({ shirt }: { shirt: Shirt }) {
   return (
     <div className="product">
       <div className="product-stage">
-        <ShirtGraphic
-          body={color.body}
-          collar={color.collar}
-          pocket={shirt.slug === "cloud-pocket"}
-          stripe={shirt.slug === "ink-stripe"}
-          className="tee-hero"
-        />
+        <FlyIn from="tr">
+          <ShirtGraphic body={color.body} accent={color.collar} number={shirt.number} className="tee-hero" />
+        </FlyIn>
       </div>
       <div className="product-copy">
         <p className="kicker">{shirt.category}</p>

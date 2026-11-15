@@ -13,16 +13,16 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#f4f7fb",
-          color: "#15233b",
+          background: "#07080c",
+          color: "#f4f6f8",
           padding: "72px",
         }}
       >
-        <div style={{ display: "flex", letterSpacing: 6, color: "#1f5fbf", fontSize: 24 }}>SHIRT STUDIO</div>
+        <div style={{ display: "flex", letterSpacing: 6, color: "#e10600", fontSize: 24 }}>RACE JERSEYS</div>
         <div style={{ display: "flex", fontSize: 108, lineHeight: 0.9 }}>
           Halyard
         </div>
-        <div style={{ display: "flex", fontSize: 32, color: "#3d5a80" }}>Navy, blue, sky, and white.</div>
+        <div style={{ display: "flex", fontSize: 32, color: "#9aa3b2" }}>Eight numbers. One dark garage.</div>
       </div>
     ),
     size,
