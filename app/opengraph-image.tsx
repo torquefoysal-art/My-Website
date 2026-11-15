@@ -13,21 +13,16 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#090807",
-          color: "#f3ecdf",
+          background: "#f4f7fb",
+          color: "#15233b",
           padding: "72px",
         }}
       >
-        <div style={{ display: "flex", color: "#c6a36a", fontSize: 28, letterSpacing: 6 }}>
-          WEB DEVELOPER
+        <div style={{ display: "flex", letterSpacing: 6, color: "#1f5fbf", fontSize: 24 }}>SHIRT STUDIO</div>
+        <div style={{ display: "flex", fontSize: 108, lineHeight: 0.9 }}>
+          Halyard
         </div>
-        <div style={{ display: "flex", flexDirection: "column", fontSize: 108, lineHeight: 0.9 }}>
-          <span>Foysal</span>
-          <span style={{ color: "#c6a36a" }}>Islam</span>
-        </div>
-        <div style={{ display: "flex", fontSize: 28, color: "#b7ad9e" }}>
-          Interfaces, type, and three-dimensional web.
-        </div>
+        <div style={{ display: "flex", fontSize: 32, color: "#3d5a80" }}>Navy, blue, sky, and white.</div>
       </div>
     ),
     size,

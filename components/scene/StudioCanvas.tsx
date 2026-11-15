@@ -6,9 +6,9 @@ import * as THREE from "three";
 import { getSceneMood } from "@/lib/scene-mood";
 
 const moodColor: Record<string, string> = {
-  gold: "#c6a36a",
-  ivory: "#f3ecdf",
-  green: "#7dbaa4",
+  gold: "#1a6fbf",
+  ivory: "#f7fbff",
+  green: "#7ec8ea",
 };
 
 function createStarGeometry(radius: number, depth: number) {
@@ -46,8 +46,8 @@ function Sculpture() {
   const pointer = useRef({ x: 0, y: 0 });
   const core = useRef<THREE.MeshStandardMaterial>(null);
   const light = useRef<THREE.PointLight>(null);
-  const color = useMemo(() => new THREE.Color("#c6a36a"), []);
-  const target = useMemo(() => new THREE.Color("#c6a36a"), []);
+  const color = useMemo(() => new THREE.Color("#1a6fbf"), []);
+  const target = useMemo(() => new THREE.Color("#1a6fbf"), []);
 
   const star = useMemo(() => createStarGeometry(0.92, 0.07), []);
   const starInner = useMemo(() => createStarGeometry(0.62, 0.05), []);
@@ -61,15 +61,16 @@ function Sculpture() {
     return () => window.removeEventListener("pointermove", onMove);
   }, [star, starInner]);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (!root.current || !rings.current) return;
 
     const targetY = pointer.current.x * 0.55;
     const targetX = pointer.current.y * -0.28;
-    root.current.rotation.y = THREE.MathUtils.damp(root.current.rotation.y, targetY, 2.4, delta);
+    root.current.rotation.y = THREE.MathUtils.damp(root.current.rotation.y, targetY + state.clock.elapsedTime * 0.08, 2.4, delta);
     root.current.rotation.x = THREE.MathUtils.damp(root.current.rotation.x, targetX, 2.4, delta);
-    rings.current.rotation.y += delta * 0.16;
-    rings.current.rotation.z += delta * 0.035;
+    root.current.position.y = 0.12 + Math.sin(state.clock.elapsedTime * 0.7) * 0.08;
+    rings.current.rotation.y += delta * 0.18;
+    rings.current.rotation.z += delta * 0.04;
 
     target.set(moodColor[getSceneMood()] ?? moodColor.gold);
     color.lerp(target, 0.08);
@@ -81,40 +82,40 @@ function Sculpture() {
   });
 
   return (
-    <group ref={root} position={[0.72, 0.2, 0]}>
+    <group ref={root} position={[1.15, 0.12, 0]}>
       <group ref={rings}>
         <mesh rotation={[Math.PI / 2, 0, 0]}>
           <torusGeometry args={[1.78, 0.012, 12, 180]} />
-          <meshStandardMaterial color="#f3e6cc" metalness={0.9} roughness={0.2} />
+          <meshStandardMaterial color="#f7fbff" metalness={0.92} roughness={0.16} />
         </mesh>
         <mesh rotation={[1.15, 0.35, 0.15]}>
           <torusGeometry args={[2.02, 0.008, 12, 180]} />
-          <meshStandardMaterial color="#c6a36a" metalness={0.88} roughness={0.26} />
+          <meshStandardMaterial color="#1a6fbf" metalness={0.86} roughness={0.22} />
         </mesh>
         <mesh rotation={[0.35, 0.2, Math.PI / 2]}>
           <torusGeometry args={[1.46, 0.008, 12, 160]} />
-          <meshStandardMaterial color="#8fb9a8" metalness={0.82} roughness={0.3} />
+          <meshStandardMaterial color="#7ec8ea" metalness={0.8} roughness={0.24} />
         </mesh>
       </group>
 
       <mesh geometry={star} rotation={[0.15, 0.2, 0.08]}>
-        <meshStandardMaterial color="#e7d3a8" metalness={0.78} roughness={0.28} />
+        <meshStandardMaterial color="#d7ebf8" metalness={0.72} roughness={0.22} />
       </mesh>
       <mesh geometry={starInner} rotation={[0.65, 0.85, 0.25]}>
-        <meshStandardMaterial color="#9a7a45" metalness={0.84} roughness={0.32} />
+        <meshStandardMaterial color="#0b1f3a" metalness={0.84} roughness={0.28} />
       </mesh>
 
       <mesh>
         <sphereGeometry args={[0.18, 40, 40]} />
         <meshStandardMaterial
           ref={core}
-          color="#c6a36a"
-          emissive="#c6a36a"
-          emissiveIntensity={0.85}
-          roughness={0.35}
+          color="#1a6fbf"
+          emissive="#7ec8ea"
+          emissiveIntensity={0.7}
+          roughness={0.28}
         />
       </mesh>
-      <pointLight ref={light} intensity={6} distance={4.5} color="#c6a36a" />
+      <pointLight ref={light} intensity={8} distance={5.2} color="#7ec8ea" />
     </group>
   );
 }
@@ -146,7 +147,7 @@ function Dust() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial color="#e6d3ae" size={0.015} sizeAttenuation transparent opacity={0.7} />
+      <pointsMaterial color="#7ec8ea" size={0.016} sizeAttenuation transparent opacity={0.75} />
     </points>
   );
 }
@@ -173,15 +174,15 @@ export default function StudioCanvas() {
       camera={{ position: wide ? [0.2, 0.1, 6.1] : [1.2, 0.2, 7.4], fov: wide ? 32 : 38 }}
       gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
       onCreated={({ gl }) => {
-        gl.setClearColor("#090807");
+        gl.setClearColor("#e7f3fb");
         gl.toneMapping = THREE.ACESFilmicToneMapping;
-        gl.toneMappingExposure = 1.18;
+        gl.toneMappingExposure = 1.12;
       }}
     >
-      <hemisphereLight args={["#f4ecdf", "#10241f", 0.55]} />
-      <ambientLight intensity={0.18} color="#f3ecdf" />
-      <directionalLight position={[4.5, 5.5, 6]} intensity={3.4} color="#fff6e8" />
-      <directionalLight position={[-5, -1.5, -3]} intensity={1.5} color="#6ea894" />
+      <hemisphereLight args={["#f7fbff", "#0b1f3a", 0.7]} />
+      <ambientLight intensity={0.35} color="#f7fbff" />
+      <directionalLight position={[4.5, 5.5, 6]} intensity={3.1} color="#ffffff" />
+      <directionalLight position={[-5, -1.5, -3]} intensity={1.6} color="#7ec8ea" />
       <Sculpture />
       <Dust />
     </Canvas>
